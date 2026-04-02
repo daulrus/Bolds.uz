@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Languages, 
@@ -18,10 +18,38 @@ import {
   Globe2,
   Users,
   Briefcase,
-  ExternalLink
+  ExternalLink,
+  Globe
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { cn } from './lib/utils';
+import { translations, Language } from './translations';
+
+// --- Context ---
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: typeof translations['ru'];
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) throw new Error('useLanguage must be used within LanguageProvider');
+  return context;
+};
+
+const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<Language>('ru');
+  const t = translations[language];
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
 
 // --- Types ---
 interface FormData {
@@ -38,6 +66,8 @@ interface FormData {
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -46,10 +76,16 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Услуги', href: '#services' },
-    { name: 'Как мы работаем', href: '#how-it-works' },
-    { name: 'Отрасли', href: '#industries' },
-    { name: 'FAQ', href: '#faq' },
+    { name: t.nav.services, href: '#services' },
+    { name: t.nav.howItWorks, href: '#how-it-works' },
+    { name: t.nav.industries, href: '#industries' },
+    { name: t.nav.faq, href: '#faq' },
+  ];
+
+  const languages: { code: Language; label: string }[] = [
+    { code: 'ru', label: 'Русский' },
+    { code: 'en', label: 'English' },
+    { code: 'uz', label: 'O\'zbekcha' },
   ];
 
   return (
@@ -62,7 +98,7 @@ const Navbar = () => {
           <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
             <Languages className="text-white w-6 h-6" />
           </div>
-          <span className="text-2xl font-bold tracking-tight">Bolds<span className="text-purple-500">.uz</span></span>
+          <span className="text-2xl font-bold tracking-tight">Bolds<span className="text-purple-700">.uz</span></span>
         </div>
 
         {/* Desktop Nav */}
@@ -72,15 +108,63 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
+          
+          {/* Language Switcher */}
+          <div className="relative">
+            <button 
+              onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+              className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors uppercase"
+            >
+              <Globe className="w-4 h-4" /> {language} <ChevronDown className={cn("w-3 h-3 transition-transform", isLangMenuOpen && "rotate-180")} />
+            </button>
+            <AnimatePresence>
+              {isLangMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl"
+                >
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setLanguage(lang.code);
+                        setIsLangMenuOpen(false);
+                      }}
+                      className={cn(
+                        "w-full px-4 py-2 text-left text-xs font-medium transition-colors hover:bg-white/5",
+                        language === lang.code ? "text-purple-400 bg-purple-500/5" : "text-slate-400"
+                      )}
+                    >
+                      {lang.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95">
-            Оставить заявку
+            {t.nav.cta}
           </a>
         </div>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+           <button 
+              onClick={() => {
+                const nextLang = language === 'ru' ? 'en' : language === 'en' ? 'uz' : 'ru';
+                setLanguage(nextLang);
+              }}
+              className="text-xs font-bold text-purple-400 uppercase border border-purple-500/20 px-2 py-1 rounded"
+            >
+              {language}
+            </button>
+          <button className="text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -102,12 +186,29 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
+            <div className="flex gap-4 py-2">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => {
+                    setLanguage(lang.code);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={cn(
+                    "text-xs font-bold uppercase px-3 py-1 rounded-lg border",
+                    language === lang.code ? "bg-purple-600 border-purple-600 text-white" : "border-white/10 text-slate-400"
+                  )}
+                >
+                  {lang.code}
+                </button>
+              ))}
+            </div>
             <a 
               href="#contact" 
               onClick={() => setIsMobileMenuOpen(false)}
               className="bg-purple-600 text-white px-6 py-3 rounded-xl text-center font-semibold"
             >
-              Оставить заявку
+              {t.nav.cta}
             </a>
           </motion.div>
         )}
@@ -117,6 +218,7 @@ const Navbar = () => {
 };
 
 const Hero = () => {
+  const { t } = useLanguage();
   return (
     <section className="relative pt-32 pb-20 px-6 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
@@ -131,22 +233,22 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-6">
-            <Clock className="w-3 h-3" /> Перевод от 24 часов
+            <Clock className="w-3 h-3" /> {t.hero.badge}
           </div>
           <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-6">
-            Профессиональный перевод <br />
-            <span className="gradient-text">без границ.</span>
+            {t.hero.title} <br />
+            <span className="gradient-text">{t.hero.titleAccent}</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-xl leading-relaxed">
-            Ваш надежный партнер в мире коммуникаций. Устный, письменный и аудио-визуальный перевод для бизнеса и частных лиц в Узбекистане.
+            {t.hero.subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
             <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all hover:shadow-[0_0_20px_rgba(147,51,234,0.4)] flex items-center justify-center gap-2 group">
-              Рассчитать стоимость <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              {t.hero.ctaPrimary} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="https://wa.me/998000000000" className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2">
-              <MessageSquare className="w-5 h-5 text-green-400" /> WhatsApp
+            <a href="https://t.me/boldsuz" className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2">
+              <MessageSquare className="w-5 h-5 text-blue-400" /> {t.hero.ctaSecondary}
             </a>
           </div>
 
@@ -159,8 +261,8 @@ const Hero = () => {
               ))}
             </div>
             <div className="text-sm">
-              <div className="font-bold">500+ завершенных проектов</div>
-              <div className="text-slate-500">Доверие крупных компаний</div>
+              <div className="font-bold">{t.hero.stats}</div>
+              <div className="text-slate-500">{t.hero.trust}</div>
             </div>
           </div>
         </motion.div>
@@ -179,14 +281,14 @@ const Hero = () => {
                   <Globe2 className="text-purple-400" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold">Языковые пары</div>
-                  <div className="text-xs text-slate-500">50+ направлений</div>
+                  <div className="text-sm font-bold">{t.hero.pairs}</div>
+                  <div className="text-xs text-slate-500">{t.hero.directions}</div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-xs text-slate-500">Статус</div>
+                <div className="text-xs text-slate-500">{t.hero.status}</div>
                 <div className="text-xs font-bold text-green-400 flex items-center gap-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> Онлайн
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> {t.hero.online}
                 </div>
               </div>
             </div>
@@ -194,8 +296,8 @@ const Hero = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div className="flex justify-between text-xs mb-2">
-                  <span className="text-slate-400">Технический перевод</span>
-                  <span className="text-purple-400">98% точность</span>
+                  <span className="text-slate-400">{t.hero.tech}</span>
+                  <span className="text-purple-400">{t.hero.accuracy}</span>
                 </div>
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <motion.div 
@@ -208,7 +310,7 @@ const Hero = () => {
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div className="flex justify-between text-xs mb-2">
-                  <span className="text-slate-400">Синхронный перевод</span>
+                  <span className="text-slate-400">{t.hero.sync}</span>
                   <span className="text-indigo-400">Live Support</span>
                 </div>
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -225,11 +327,11 @@ const Hero = () => {
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
                 <div className="text-2xl font-bold text-purple-400">15+</div>
-                <div className="text-[10px] text-slate-400 uppercase tracking-wider">Лет опыта</div>
+                <div className="text-[10px] text-slate-400 uppercase tracking-wider">{t.hero.experience}</div>
               </div>
               <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-center">
                 <div className="text-2xl font-bold text-indigo-400">24/7</div>
-                <div className="text-[10px] text-slate-400 uppercase tracking-wider">Поддержка</div>
+                <div className="text-[10px] text-slate-400 uppercase tracking-wider">{t.hero.support}</div>
               </div>
             </div>
           </div>
@@ -243,16 +345,24 @@ const Hero = () => {
 };
 
 const TrustBar = () => {
-  const logos = [
-    "UzAuto", "Lukoil", "Huawei", "Beeline", "Agrobank", "Nestle"
+  const { t } = useLanguage();
+  const partners = [
+    "UZAUTO", "CSCSWD", "IDVE", "UZASSETS", "TSUE", "SCEEP",
+    "TCFAS", "ZIYO", "ASD", "CDHSVE", "NPRC", "STC"
   ];
+
   return (
     <section className="py-12 border-y border-white/5 bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-6">
-        <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">Нам доверяют лидеры рынка</p>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all">
-          {logos.map((logo) => (
-            <span key={logo} className="text-xl md:text-2xl font-black tracking-tighter text-slate-300">{logo}</span>
+        <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">{t.hero.trustBar}</p>
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 hover:opacity-100 transition-all">
+          {partners.map((name, idx) => (
+            <span 
+              key={idx} 
+              className="text-lg md:text-xl font-black tracking-tighter text-slate-300 whitespace-nowrap"
+            >
+              {name}
+            </span>
           ))}
         </div>
       </div>
@@ -261,48 +371,28 @@ const TrustBar = () => {
 };
 
 const Services = () => {
-  const services = [
-    {
-      title: "Письменный перевод",
-      description: "Юридические, медицинские, технические тексты и личные документы с нотариальным заверением.",
-      icon: <FileText className="w-8 h-8" />,
-      color: "from-blue-500 to-cyan-500",
-      features: ["Нотариальное заверение", "Техническая верстка", "Срочные заказы"]
-    },
-    {
-      title: "Устный перевод",
-      description: "Синхронный и последовательный перевод для конференций, бизнес-встреч и делегаций.",
-      icon: <Headphones className="w-8 h-8" />,
-      color: "from-purple-500 to-pink-500",
-      features: ["Синхронное оборудование", "Выезд по Узбекистану", "Конференц-поддержка"]
-    },
-    {
-      title: "Аудио и Видео",
-      description: "Транскрибация, перевод и субтитрование видеоконтента, рекламных роликов и лекций.",
-      icon: <Mic2 className="w-8 h-8" />,
-      color: "from-orange-500 to-red-500",
-      features: ["Тайм-коды", "Озвучка", "Локализация контента"]
-    }
-  ];
+  const { t } = useLanguage();
+  const icons = [<FileText className="w-8 h-8" />, <Headphones className="w-8 h-8" />];
+  const colors = ["from-blue-500 to-cyan-500", "from-purple-500 to-pink-500"];
 
   return (
     <section id="services" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Наши услуги</h2>
-          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">Our Services</p>
-          <p className="text-slate-400 max-w-2xl mx-auto">Полный спектр лингвистических решений для вашего бизнеса и личных нужд.</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">{t.services.title}</h2>
+          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.services.subtitle}</p>
+          <p className="text-slate-400 max-w-2xl mx-auto">{t.services.desc}</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {services.map((service, idx) => (
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {t.services.items.map((service, idx) => (
             <motion.div
               key={idx}
               whileHover={{ y: -10 }}
               className="glass-card p-8 flex flex-col h-full group"
             >
-              <div className={cn("w-16 h-16 rounded-2xl bg-linear-to-br mb-6 flex items-center justify-center text-white shadow-lg", service.color)}>
-                {service.icon}
+              <div className={cn("w-16 h-16 rounded-2xl bg-linear-to-br mb-6 flex items-center justify-center text-white shadow-lg", colors[idx])}>
+                {icons[idx]}
               </div>
               <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
               <p className="text-slate-400 mb-8 flex-grow">{service.description}</p>
@@ -314,7 +404,7 @@ const Services = () => {
                 ))}
               </ul>
               <a href="#contact" className="w-full py-3 rounded-xl border border-white/10 text-center font-bold hover:bg-white/5 transition-colors">
-                Узнать больше
+                {t.services.more}
               </a>
             </motion.div>
           ))}
@@ -325,46 +415,26 @@ const Services = () => {
 };
 
 const HowItWorks = () => {
-  const steps = [
-    {
-      title: "Заявка",
-      desc: "Оставьте заявку на сайте или в WhatsApp. Мы ответим в течение 15 минут.",
-      icon: <MessageSquare />
-    },
-    {
-      title: "Оценка",
-      desc: "Рассчитываем точную стоимость и сроки. Согласовываем детали проекта.",
-      icon: <Clock />
-    },
-    {
-      title: "Перевод",
-      desc: "Профессиональный переводчик приступает к работе. Контроль качества (QA).",
-      icon: <Languages />
-    },
-    {
-      title: "Результат",
-      desc: "Вы получаете готовый перевод в удобном формате. Оплата по факту.",
-      icon: <CheckCircle2 />
-    }
-  ];
+  const { t } = useLanguage();
+  const icons = [<MessageSquare />, <Clock />, <Languages />, <CheckCircle2 />];
 
   return (
     <section id="how-it-works" className="py-24 px-6 bg-white/2">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Как мы работаем</h2>
-          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">How It Works</p>
-          <p className="text-slate-400">Простой и прозрачный процесс от первого контакта до готового результата.</p>
+          <h2 className="text-4xl font-bold mb-4">{t.howItWorks.title}</h2>
+          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.howItWorks.subtitle}</p>
+          <p className="text-slate-400">{t.howItWorks.desc}</p>
         </div>
 
         <div className="grid md:grid-cols-4 gap-8 relative">
           {/* Connector line */}
           <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-white/5 -translate-y-12 z-0" />
           
-          {steps.map((step, idx) => (
+          {t.howItWorks.steps.map((step, idx) => (
             <div key={idx} className="relative z-10 text-center">
               <div className="w-16 h-16 rounded-full bg-slate-900 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-6 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-                {step.icon}
+                {icons[idx]}
               </div>
               <h3 className="text-xl font-bold mb-2">{step.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
@@ -377,34 +447,28 @@ const HowItWorks = () => {
 };
 
 const Industries = () => {
-  const industries = [
-    { name: "Юриспруденция", icon: <ShieldCheck /> },
-    { name: "Медицина", icon: <CheckCircle2 /> },
-    { name: "IT & Технологии", icon: <Globe2 /> },
-    { name: "Нефть и Газ", icon: <Briefcase /> },
-    { name: "Маркетинг", icon: <Users /> },
-    { name: "Личные документы", icon: <FileText /> }
-  ];
+  const { t } = useLanguage();
+  const icons = [<ShieldCheck />, <CheckCircle2 />, <Globe2 />, <Briefcase />, <Users />];
 
   return (
     <section id="industries" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-4xl font-bold mb-4">Отраслевая экспертиза</h2>
-            <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">Industry Expertise</p>
-            <p className="text-slate-400">Мы понимаем специфику вашей ниши. Наши переводчики — эксперты в своих областях.</p>
+            <h2 className="text-4xl font-bold mb-4">{t.industries.title}</h2>
+            <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.industries.subtitle}</p>
+            <p className="text-slate-400">{t.industries.desc}</p>
           </div>
           <a href="#contact" className="text-purple-400 font-bold flex items-center gap-2 hover:gap-3 transition-all">
-            Все отрасли <ArrowRight className="w-4 h-4" />
+            {t.industries.all} <ArrowRight className="w-4 h-4" />
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {industries.map((ind, idx) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {t.industries.items.map((ind, idx) => (
             <div key={idx} className="glass-card p-6 text-center hover:bg-white/10 transition-colors cursor-default">
-              <div className="text-purple-500 mb-4 flex justify-center">{ind.icon}</div>
-              <div className="text-sm font-bold">{ind.name}</div>
+              <div className="text-purple-500 mb-4 flex justify-center">{icons[idx]}</div>
+              <div className="text-sm font-bold">{ind}</div>
             </div>
           ))}
         </div>
@@ -414,33 +478,16 @@ const Industries = () => {
 };
 
 const FAQ = () => {
+  const { t } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const faqs = [
-    {
-      q: "Как быстро вы можете выполнить перевод?",
-      a: "Стандартная скорость — 8-10 страниц в день. Однако мы предлагаем услуги срочного перевода (от 2 часов) в зависимости от объема и сложности текста."
-    },
-    {
-      q: "Заверяете ли вы переводы нотариально?",
-      a: "Да, мы предоставляем полный спектр услуг по нотариальному заверению переводов и проставлению апостиля."
-    },
-    {
-      q: "Какие языки вы переводите?",
-      a: "Мы работаем с более чем 50 языковыми парами, включая английский, русский, узбекский, китайский, немецкий, турецкий и многие другие."
-    },
-    {
-      q: "Как гарантируется конфиденциальность?",
-      a: "Мы подписываем соглашение о неразглашении (NDA) с каждым клиентом. Все данные передаются по защищенным каналам."
-    }
-  ];
 
   return (
     <section id="faq" className="py-24 px-6 bg-white/2">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-4xl font-bold mb-4 text-center">Часто задаваемые вопросы</h2>
-        <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-12 text-center">Frequently Asked Questions</p>
+        <h2 className="text-4xl font-bold mb-4 text-center">{t.faq.title}</h2>
+        <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-12 text-center">{t.faq.subtitle}</p>
         <div className="space-y-4">
-          {faqs.map((faq, idx) => (
+          {t.faq.items.map((faq, idx) => (
             <div key={idx} className="glass-card overflow-hidden">
               <button 
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
@@ -470,13 +517,13 @@ const FAQ = () => {
 };
 
 const ContactForm = () => {
+  const { t } = useLanguage();
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onSubmit = (data: FormData) => {
     console.log(data);
     setIsSubmitted(true);
-    // In real app, send to API
   };
 
   return (
@@ -485,9 +532,9 @@ const ContactForm = () => {
       
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
         <div>
-          <h2 className="text-5xl font-bold mb-6">Готовы начать <br /> <span className="gradient-text">Bold Steps?</span></h2>
+          <h2 className="text-5xl font-bold mb-6">{t.contact.title} <br /> <span className="gradient-text">Bold Steps?</span></h2>
           <p className="text-slate-400 text-lg mb-12">
-            Оставьте заявку сейчас, и наш менеджер свяжется с вами в течение 15 минут для бесплатной консультации и оценки проекта.
+            {t.contact.desc}
           </p>
 
           <div className="space-y-8">
@@ -496,17 +543,8 @@ const ContactForm = () => {
                 <Phone className="w-6 h-6" />
               </div>
               <div>
-                <div className="text-sm text-slate-500 uppercase tracking-wider font-bold">Телефон</div>
-                <div className="text-xl font-bold">+998 (71) 000-00-00</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-400">
-                <Globe2 className="w-6 h-6" />
-              </div>
-              <div>
-                <div className="text-sm text-slate-500 uppercase tracking-wider font-bold">Email</div>
-                <div className="text-xl font-bold">info@bolds.uz</div>
+                <div className="text-sm text-slate-500 uppercase tracking-wider font-bold">{t.contact.phone}</div>
+                <div className="text-xl font-bold">+998 77 000 22 00</div>
               </div>
             </div>
           </div>
@@ -517,39 +555,38 @@ const ContactForm = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-300">Ваше имя</label>
+                  <label className="text-sm font-bold text-slate-300">{t.contact.form.name}</label>
                   <input 
                     {...register("name", { required: true })}
-                    placeholder="Иван Иванов"
+                    placeholder={t.contact.form.namePlaceholder}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors"
                   />
-                  {errors.name && <span className="text-xs text-red-400">Обязательное поле</span>}
+                  {errors.name && <span className="text-xs text-red-400">{t.contact.form.required}</span>}
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-300">Телефон / Telegram</label>
+                  <label className="text-sm font-bold text-slate-300">{t.contact.form.contact}</label>
                   <input 
                     {...register("contact", { required: true })}
-                    placeholder="+998 90 123 45 67"
+                    placeholder={t.contact.form.contactPlaceholder}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors"
                   />
-                  {errors.contact && <span className="text-xs text-red-400">Обязательное поле</span>}
+                  {errors.contact && <span className="text-xs text-red-400">{t.contact.form.required}</span>}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-300">Тип услуги</label>
+                <label className="text-sm font-bold text-slate-300">{t.contact.form.service}</label>
                 <select 
                   {...register("service")}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors appearance-none"
                 >
-                  <option value="written">Письменный перевод</option>
-                  <option value="oral">Устный перевод</option>
-                  <option value="audio">Аудио/Видео перевод</option>
+                  <option value="written">{t.services.items[0].title}</option>
+                  <option value="oral">{t.services.items[1].title}</option>
                 </select>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-300">Прикрепить файл (опционально)</label>
+                <label className="text-sm font-bold text-slate-300">{t.contact.form.file}</label>
                 <div className="relative group">
                   <input 
                     type="file" 
@@ -558,7 +595,7 @@ const ContactForm = () => {
                   />
                   <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2 group-hover:border-purple-500/50 transition-colors">
                     <Upload className="w-8 h-8 text-slate-500 group-hover:text-purple-400 transition-colors" />
-                    <span className="text-sm text-slate-400">Нажмите или перетащите файл</span>
+                    <span className="text-sm text-slate-400">{t.contact.form.fileHint}</span>
                   </div>
                 </div>
               </div>
@@ -567,10 +604,10 @@ const ContactForm = () => {
                 type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-600/20 active:scale-[0.98]"
               >
-                Отправить заявку
+                {t.contact.form.submit}
               </button>
               <p className="text-[10px] text-center text-slate-500">
-                Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.
+                {t.contact.form.privacy}
               </p>
             </form>
           ) : (
@@ -582,13 +619,13 @@ const ContactForm = () => {
               <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="w-10 h-10 text-green-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Заявка принята!</h3>
-              <p className="text-slate-400 mb-8">Менеджер свяжется с вами в ближайшее время. Спасибо за доверие!</p>
+              <h3 className="text-2xl font-bold mb-4">{t.contact.form.successTitle}</h3>
+              <p className="text-slate-400 mb-8">{t.contact.form.successDesc}</p>
               <button 
                 onClick={() => setIsSubmitted(false)}
                 className="text-purple-400 font-bold hover:underline"
               >
-                Отправить еще одну заявку
+                {t.contact.form.another}
               </button>
             </motion.div>
           )}
@@ -599,19 +636,20 @@ const ContactForm = () => {
 };
 
 const Footer = () => {
+  const { t } = useLanguage();
   return (
     <footer className="bg-slate-950 pt-20 pb-10 border-t border-white/5 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
+        <div className="grid md:grid-cols-5 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-8 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
                 <Languages className="text-white w-5 h-5" />
               </div>
-              <span className="text-xl font-bold tracking-tight">Bolds<span className="text-purple-500">.uz</span></span>
+          <span className="text-xl font-bold tracking-tight">Bolds<span className="text-purple-700">.uz</span></span>
             </div>
             <p className="text-slate-500 max-w-sm leading-relaxed mb-8">
-              Профессиональное бюро переводов в Ташкенте. Мы помогаем бизнесу говорить на одном языке с миром.
+              {t.footer.desc}
             </p>
             <div className="flex gap-4">
               {['Instagram', 'Telegram', 'Facebook', 'LinkedIn'].map((s) => (
@@ -623,30 +661,41 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="font-bold mb-6">Навигация</h4>
+            <h4 className="font-bold mb-6">{t.footer.nav}</h4>
             <ul className="space-y-4 text-slate-500 text-sm">
-              <li><a href="#services" className="hover:text-white transition-colors">Услуги</a></li>
-              <li><a href="#how-it-works" className="hover:text-white transition-colors">Как мы работаем</a></li>
-              <li><a href="#industries" className="hover:text-white transition-colors">Отрасли</a></li>
-              <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">{t.nav.services}</a></li>
+              <li><a href="#how-it-works" className="hover:text-white transition-colors">{t.nav.howItWorks}</a></li>
+              <li><a href="#industries" className="hover:text-white transition-colors">{t.nav.industries}</a></li>
+              <li><a href="#faq" className="hover:text-white transition-colors">{t.nav.faq}</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold mb-6">Контакты</h4>
+            <h4 className="font-bold mb-6">{t.footer.contacts}</h4>
             <ul className="space-y-4 text-slate-500 text-sm">
-              <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> +998 71 000 00 00</li>
-              <li className="flex items-center gap-2"><MessageSquare className="w-4 h-4" /> @bolds_uz</li>
-              <li className="flex items-start gap-2"><Globe2 className="w-4 h-4 mt-1" /> Ташкент, ул. Навои, 12</li>
+              <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> +998 77 000 22 00</li>
+              <li className="flex items-center gap-2"><MessageSquare className="w-4 h-4" /> @boldsuz</li>
+              <li className="flex items-start gap-2"><Globe2 className="w-4 h-4 mt-1" /> {t.footer.address}</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold mb-6">{t.footer.companyDetails.title}</h4>
+            <ul className="space-y-2 text-slate-500 text-[11px] leading-relaxed">
+              <li>{t.footer.companyDetails.director}</li>
+              <li>{t.footer.companyDetails.postalCode}</li>
+              <li>{t.footer.companyDetails.bank}</li>
+              <li>{t.footer.companyDetails.accountUZS}</li>
+              <li>{t.footer.companyDetails.accountUSD}</li>
             </ul>
           </div>
         </div>
 
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-600 uppercase tracking-widest font-bold">
-          <div>© 2026 Bolds.uz. Все права защищены.</div>
+          <div>{t.footer.rights}</div>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-slate-400">Политика конфиденциальности</a>
-            <a href="#" className="hover:text-slate-400">Публичная оферта</a>
+            <a href="#" className="hover:text-slate-400">{t.footer.privacy}</a>
+            <a href="#" className="hover:text-slate-400">{t.footer.offer}</a>
           </div>
         </div>
       </div>
@@ -654,37 +703,36 @@ const Footer = () => {
   );
 };
 
-const WhatsAppButton = () => {
+const TelegramButton = () => {
   return (
     <a 
-      href="https://wa.me/998000000000" 
+      href="https://t.me/boldsuz" 
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-8 right-8 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 group"
+      className="fixed bottom-8 right-8 z-50 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 group"
     >
       <MessageSquare className="w-8 h-8" />
-      <span className="absolute right-full mr-4 bg-white text-slate-900 px-4 py-2 rounded-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
-        Напишите нам!
-      </span>
     </a>
   );
 };
 
 export default function App() {
   return (
-    <div className="min-h-screen selection:bg-purple-500/30">
-      <Navbar />
-      <main>
-        <Hero />
-        <TrustBar />
-        <Services />
-        <HowItWorks />
-        <Industries />
-        <FAQ />
-        <ContactForm />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    <LanguageProvider>
+      <div className="min-h-screen selection:bg-purple-500/30">
+        <Navbar />
+        <main>
+          <Hero />
+          <TrustBar />
+          <Services />
+          <HowItWorks />
+          <Industries />
+          <FAQ />
+          <ContactForm />
+        </main>
+        <Footer />
+        <TelegramButton />
+      </div>
+    </LanguageProvider>
   );
 }
