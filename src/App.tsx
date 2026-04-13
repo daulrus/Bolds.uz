@@ -110,7 +110,7 @@ const Navbar = () => {
           ))}
           
           {/* Language Switcher */}
-          <div className="relative">
+          <div className="relative z-40">
             <button 
               onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
               className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors uppercase"
@@ -123,7 +123,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl"
+                  className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50"
                 >
                   {languages.map((lang) => (
                     <button
@@ -174,7 +174,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 flex flex-col gap-4 md:hidden"
+            className="absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 flex flex-col gap-4 md:hidden z-40"
           >
             {navLinks.map((link) => (
               <a 
@@ -235,9 +235,9 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-6">
             <Clock className="w-3 h-3" /> {t.hero.badge}
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-6">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
             {t.hero.title} <br />
-            <span className="gradient-text">{t.hero.titleAccent}</span>
+            <span className="gradient-text text-5xl md:text-6xl">{t.hero.titleAccent}</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-xl leading-relaxed">
             {t.hero.subtitle}
@@ -346,23 +346,19 @@ const Hero = () => {
 
 const TrustBar = () => {
   const { t } = useLanguage();
-  const partners = [
-    "UZAUTO", "CSCSWD", "IDVE", "UZASSETS", "TSUE", "SCEEP",
-    "TCFAS", "ZIYO", "ASD", "CDHSVE", "NPRC", "STC"
-  ];
 
   return (
     <section className="py-12 border-y border-white/5 bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">{t.hero.trustBar}</p>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 hover:opacity-100 transition-all">
-          {partners.map((name, idx) => (
-            <span 
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
+          {[1, 2, 3, 4, 5, 6].map((idx) => (
+            <div 
               key={idx} 
-              className="text-lg md:text-xl font-black tracking-tighter text-slate-300 whitespace-nowrap"
+              className="h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors cursor-default"
             >
-              {name}
-            </span>
+              <div className="text-sm text-slate-400 font-medium">Logo {idx}</div>
+            </div>
           ))}
         </div>
       </div>
@@ -464,10 +460,10 @@ const Industries = () => {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {t.industries.items.map((ind, idx) => (
             <div key={idx} className="glass-card p-6 text-center hover:bg-white/10 transition-colors cursor-default">
-              <div className="text-purple-500 mb-4 flex justify-center">{icons[idx]}</div>
+              <div className="text-purple-500 mb-4 flex justify-center">{icons[idx < icons.length ? idx : icons.length - 1]}</div>
               <div className="text-sm font-bold">{ind}</div>
             </div>
           ))}
@@ -578,10 +574,16 @@ const ContactForm = () => {
                 <label className="text-sm font-bold text-slate-300">{t.contact.form.service}</label>
                 <select 
                   {...register("service")}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors appearance-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors appearance-none text-white relative z-10"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a78bfa' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 1rem center',
+                    paddingRight: '2.5rem'
+                  }}
                 >
-                  <option value="written">{t.services.items[0].title}</option>
-                  <option value="oral">{t.services.items[1].title}</option>
+                  <option value="written" className="bg-slate-900 text-white">{t.services.items[0].title}</option>
+                  <option value="oral" className="bg-slate-900 text-white">{t.services.items[1].title}</option>
                 </select>
               </div>
 
