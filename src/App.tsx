@@ -25,8 +25,6 @@ import { useForm } from 'react-hook-form';
 import { cn } from './lib/utils';
 import { translations, Language } from './translations';
 
-import React from 'react';
-import './App.css';
 // --- Context ---
 interface LanguageContextType {
   language: Language;
@@ -34,7 +32,6 @@ interface LanguageContextType {
   t: typeof translations['ru'];
 }
 
-const App = () => {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const useLanguage = () => {
@@ -98,10 +95,10 @@ const Navbar = () => {
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-linear-to-br from-violet-600 to-indigo-700 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
             <Languages className="text-white w-6 h-6" />
           </div>
-          <span className="text-2xl font-bold tracking-tight">Bolds<span className="text-violet-600">.uz</span></span>
+          <span className="text-2xl font-bold tracking-tight">Bolds<span className="text-purple-700">.uz</span></span>
         </div>
 
         {/* Desktop Nav */}
@@ -137,7 +134,7 @@ const Navbar = () => {
                       }}
                       className={cn(
                         "w-full px-4 py-2 text-left text-xs font-medium transition-colors hover:bg-white/5",
-                        language === lang.code ? "text-violet-400 bg-violet-500/5" : "text-slate-400"
+                        language === lang.code ? "text-purple-400 bg-purple-500/5" : "text-slate-400"
                       )}
                     >
                       {lang.label}
@@ -148,7 +145,7 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <a href="#contact" className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95">
+          <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95">
             {t.nav.cta}
           </a>
         </div>
@@ -160,7 +157,7 @@ const Navbar = () => {
                 const nextLang = language === 'ru' ? 'en' : language === 'en' ? 'uz' : 'ru';
                 setLanguage(nextLang);
               }}
-              className="text-xs font-bold text-violet-400 uppercase border border-violet-500/20 px-2 py-1 rounded"
+              className="text-xs font-bold text-purple-400 uppercase border border-purple-500/20 px-2 py-1 rounded"
             >
               {language}
             </button>
@@ -199,7 +196,7 @@ const Navbar = () => {
                   }}
                   className={cn(
                     "text-xs font-bold uppercase px-3 py-1 rounded-lg border",
-                    language === lang.code ? "bg-violet-600 border-violet-600 text-white" : "border-white/10 text-slate-400"
+                    language === lang.code ? "bg-purple-600 border-purple-600 text-white" : "border-white/10 text-slate-400"
                   )}
                 >
                   {lang.code}
@@ -209,7 +206,7 @@ const Navbar = () => {
             <a 
               href="#contact" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="bg-violet-600 text-white px-6 py-3 rounded-xl text-center font-semibold"
+              className="bg-purple-600 text-white px-6 py-3 rounded-xl text-center font-semibold"
             >
               {t.nav.cta}
             </a>
@@ -223,18 +220,10 @@ const Navbar = () => {
 const Hero = () => {
   const { t } = useLanguage();
   return (
-    <div className="app-container" style={{backgroundColor: 'violet'}}>
-      <header className="app-header">
-        <h1>Welcome to Our Amazing Application</h1>
-      </header>
-      <main className="industries-grid">
-        {renderIndustries()}
-      </main>
-    </div>
     <section className="relative pt-32 pb-20 px-6 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-600/12 blur-[80px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/12 blur-[80px] rounded-full" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/20 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
@@ -243,7 +232,7 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-bold uppercase tracking-wider mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-6">
             <Clock className="w-3 h-3" /> {t.hero.badge}
           </div>
           <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
@@ -255,7 +244,7 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#contact" className="bg-violet-600 hover:bg-violet-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all hover:shadow-[0_0_20px_rgba(109,40,217,0.3)] flex items-center justify-center gap-2 group">
+            <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all hover:shadow-[0_0_20px_rgba(147,51,234,0.4)] flex items-center justify-center gap-2 group">
               {t.hero.ctaPrimary} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a href="https://t.me/boldsuz" className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2">
@@ -285,11 +274,11 @@ const Hero = () => {
           className="relative hidden lg:block"
         >
           <div className="glass-card p-8 relative z-10 overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/8 blur-2xl rounded-full" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-3xl rounded-full" />
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-violet-500/15 flex items-center justify-center">
-                  <Globe2 className="text-violet-400" />
+                <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                  <Globe2 className="text-purple-400" />
                 </div>
                 <div>
                   <div className="text-sm font-bold">{t.hero.pairs}</div>
@@ -308,14 +297,14 @@ const Hero = () => {
               <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div className="flex justify-between text-xs mb-2">
                   <span className="text-slate-400">{t.hero.tech}</span>
-                  <span className="text-violet-400">{t.hero.accuracy}</span>
+                  <span className="text-purple-400">{t.hero.accuracy}</span>
                 </div>
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: '98%' }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className="h-full bg-violet-500" 
+                    className="h-full bg-purple-500" 
                   />
                 </div>
               </div>
@@ -336,8 +325,8 @@ const Hero = () => {
             </div>
 
             <div className="mt-8 grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-violet-500/10 border border-violet-500/20 text-center">
-                <div className="text-2xl font-bold text-violet-400">15+</div>
+              <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
+                <div className="text-2xl font-bold text-purple-400">15+</div>
                 <div className="text-[10px] text-slate-400 uppercase tracking-wider">{t.hero.experience}</div>
               </div>
               <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-center">
@@ -347,82 +336,47 @@ const Hero = () => {
             </div>
           </div>
           {/* Decorative elements */}
-          <div className="absolute -top-6 -right-6 w-24 h-24 bg-violet-600/12 rounded-full blur-2xl" />
-          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-600/12 rounded-full blur-2xl" />
+          <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-600/20 rounded-full blur-2xl" />
+          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-600/20 rounded-full blur-2xl" />
         </motion.div>
       </div>
     </section>
   );
 };
 
-const renderIndustries = () => {
-  const industries = [
-    { logo: 'pepsi.svg', name: 'Pepsi' },
-    { logo: 'coca-cola.svg', name: 'Coca-Cola' },
-    { logo: 'kfc.svg', name: 'KFC' },
-    { logo: 'crafers.svg', name: 'Crafers' },
-    { logo: 'uzum.svg', name: 'Uzum' },
-    { logo: 'nbu.svg', name: 'NBU' },
 const TrustBar = () => {
   const { t } = useLanguage();
 
-  const logos = [
-    { name: 'Pepsi', initials: 'P' },
-    { name: 'Coca-Cola', initials: 'CC' },
-    { name: 'KFC', initials: 'KFC' },
-    { name: 'Crafers', initials: 'CF' },
-    { name: 'Uzum', initials: 'U' },
-    { name: 'NBU', initials: 'NBU' },
-  ];
-
   return (
-    <div className="grid-container">
-      {industries.map((industry, index) => (
-        <div key={index} className="grid-item">
-          <img src={industry.logo} alt={industry.name} className="logo" />
-          <p>{industry.name}</p>
-    <section className="py-12 border-y border-white/5 bg-slate-950/40">
+    <section className="py-12 border-y border-white/5 bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">{t.hero.trustBar}</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-          {logos.map((logo, idx) => (
-            <motion.div 
-              key={idx}
-              whileHover={{ scale: 1.08, y: -3 }}
-              className="h-20 md:h-24 bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/40 rounded-xl flex items-center justify-center hover:border-slate-600/60 transition-all duration-300 cursor-default group shadow-sm"
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
+          {[1, 2, 3, 4, 5, 6].map((idx) => (
+            <div 
+              key={idx} 
+              className="h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors cursor-default"
             >
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-12 h-12 rounded-lg bg-slate-700/40 flex items-center justify-center group-hover:bg-slate-600/50 transition-colors">
-                  <div className="text-[11px] md:text-xs font-bold text-slate-300 group-hover:text-white transition-colors text-center px-1">
-                    {logo.initials}
-                  </div>
-                </div>
-                <div className="text-[9px] md:text-xs text-slate-400 font-medium text-center truncate w-full px-1">
-                  {logo.name}
-                </div>
-              </div>
-            </motion.div>
+              <div className="text-sm text-slate-400 font-medium">Logo {idx}</div>
+            </div>
           ))}
         </div>
-      ))}
-    </div>
       </div>
     </section>
   );
 };
 
-export default App;
 const Services = () => {
   const { t } = useLanguage();
   const icons = [<FileText className="w-8 h-8" />, <Headphones className="w-8 h-8" />];
-  const colors = ["from-blue-500 to-cyan-500", "from-violet-500 to-pink-500"];
+  const colors = ["from-blue-500 to-cyan-500", "from-purple-500 to-pink-500"];
 
   return (
     <section id="services" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">{t.services.title}</h2>
-          <p className="text-violet-500 font-bold text-sm uppercase tracking-widest mb-2">{t.services.subtitle}</p>
+          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.services.subtitle}</p>
           <p className="text-slate-400 max-w-2xl mx-auto">{t.services.desc}</p>
         </div>
 
@@ -441,7 +395,7 @@ const Services = () => {
               <ul className="space-y-3 mb-8">
                 {service.features.map((f, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-violet-500" /> {f}
+                    <CheckCircle2 className="w-4 h-4 text-purple-500" /> {f}
                   </li>
                 ))}
               </ul>
@@ -465,7 +419,7 @@ const HowItWorks = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">{t.howItWorks.title}</h2>
-          <p className="text-violet-500 font-bold text-sm uppercase tracking-widest mb-2">{t.howItWorks.subtitle}</p>
+          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.howItWorks.subtitle}</p>
           <p className="text-slate-400">{t.howItWorks.desc}</p>
         </div>
 
@@ -475,7 +429,7 @@ const HowItWorks = () => {
           
           {t.howItWorks.steps.map((step, idx) => (
             <div key={idx} className="relative z-10 text-center">
-              <div className="w-16 h-16 rounded-full bg-slate-900 border-2 border-violet-500/30 flex items-center justify-center mx-auto mb-6 text-violet-400 shadow-[0_0_15px_rgba(109,40,217,0.15)]">
+              <div className="w-16 h-16 rounded-full bg-slate-900 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-6 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
                 {icons[idx]}
               </div>
               <h3 className="text-xl font-bold mb-2">{step.title}</h3>
@@ -498,26 +452,20 @@ const Industries = () => {
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-4xl font-bold mb-4">{t.industries.title}</h2>
-            <p className="text-violet-600 font-bold text-sm uppercase tracking-widest mb-2">{t.industries.subtitle}</p>
+            <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.industries.subtitle}</p>
             <p className="text-slate-400">{t.industries.desc}</p>
           </div>
-          <a href="#contact" className="text-violet-400 font-bold flex items-center gap-2 hover:gap-3 transition-all whitespace-nowrap">
+          <a href="#contact" className="text-purple-400 font-bold flex items-center gap-2 hover:gap-3 transition-all">
             {t.industries.all} <ArrowRight className="w-4 h-4" />
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {t.industries.items.map((ind, idx) => (
-            <motion.div 
-              key={idx}
-              whileHover={{ y: -4 }}
-              className="glass-card p-6 md:p-8 text-center hover:bg-white/15 transition-all duration-300 cursor-default group"
-            >
-              <div className="text-violet-400 mb-4 flex justify-center text-3xl md:text-4xl group-hover:scale-110 transition-transform">
-                {icons[idx < icons.length ? idx : icons.length - 1]}
-              </div>
-              <div className="text-sm md:text-base font-bold text-white">{ind}</div>
-            </motion.div>
+            <div key={idx} className="glass-card p-6 text-center hover:bg-white/10 transition-colors cursor-default">
+              <div className="text-purple-500 mb-4 flex justify-center">{icons[idx < icons.length ? idx : icons.length - 1]}</div>
+              <div className="text-sm font-bold">{ind}</div>
+            </div>
           ))}
         </div>
       </div>
@@ -533,7 +481,7 @@ const FAQ = () => {
     <section id="faq" className="py-24 px-6 bg-white/2">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-4xl font-bold mb-4 text-center">{t.faq.title}</h2>
-        <p className="text-violet-500 font-bold text-sm uppercase tracking-widest mb-12 text-center">{t.faq.subtitle}</p>
+        <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-12 text-center">{t.faq.subtitle}</p>
         <div className="space-y-4">
           {t.faq.items.map((faq, idx) => (
             <div key={idx} className="glass-card overflow-hidden">
@@ -576,7 +524,7 @@ const ContactForm = () => {
 
   return (
     <section id="contact" className="py-24 px-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/8 blur-[100px] rounded-full -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 blur-[120px] rounded-full -z-10" />
       
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
         <div>
@@ -587,7 +535,7 @@ const ContactForm = () => {
 
           <div className="space-y-8">
             <div className="flex items-center gap-6">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-violet-400">
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400">
                 <Phone className="w-6 h-6" />
               </div>
               <div>
@@ -607,7 +555,7 @@ const ContactForm = () => {
                   <input 
                     {...register("name", { required: true })}
                     placeholder={t.contact.form.namePlaceholder}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors"
                   />
                   {errors.name && <span className="text-xs text-red-400">{t.contact.form.required}</span>}
                 </div>
@@ -616,7 +564,7 @@ const ContactForm = () => {
                   <input 
                     {...register("contact", { required: true })}
                     placeholder={t.contact.form.contactPlaceholder}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors"
                   />
                   {errors.contact && <span className="text-xs text-red-400">{t.contact.form.required}</span>}
                 </div>
@@ -626,9 +574,9 @@ const ContactForm = () => {
                 <label className="text-sm font-bold text-slate-300">{t.contact.form.service}</label>
                 <select 
                   {...register("service")}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500 transition-colors appearance-none text-white relative z-10"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors appearance-none text-white relative z-10"
                   style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236d28d9' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a78bfa' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'right 1rem center',
                     paddingRight: '2.5rem'
@@ -647,8 +595,8 @@ const ContactForm = () => {
                     {...register("file")}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                   />
-                  <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2 group-hover:border-violet-500/50 transition-colors">
-                    <Upload className="w-8 h-8 text-slate-500 group-hover:text-violet-400 transition-colors" />
+                  <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2 group-hover:border-purple-500/50 transition-colors">
+                    <Upload className="w-8 h-8 text-slate-500 group-hover:text-purple-400 transition-colors" />
                     <span className="text-sm text-slate-400">{t.contact.form.fileHint}</span>
                   </div>
                 </div>
@@ -656,7 +604,7 @@ const ContactForm = () => {
 
               <button 
                 type="submit"
-                className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-violet-600/20 active:scale-[0.98]"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-600/20 active:scale-[0.98]"
               >
                 {t.contact.form.submit}
               </button>
@@ -677,7 +625,7 @@ const ContactForm = () => {
               <p className="text-slate-400 mb-8">{t.contact.form.successDesc}</p>
               <button 
                 onClick={() => setIsSubmitted(false)}
-                className="text-violet-400 font-bold hover:underline"
+                className="text-purple-400 font-bold hover:underline"
               >
                 {t.contact.form.another}
               </button>
@@ -697,17 +645,17 @@ const Footer = () => {
         <div className="grid md:grid-cols-5 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-linear-to-br from-violet-600 to-indigo-700 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
                 <Languages className="text-white w-5 h-5" />
               </div>
-          <span className="text-xl font-bold tracking-tight">Bolds<span className="text-violet-600">.uz</span></span>
+          <span className="text-xl font-bold tracking-tight">Bolds<span className="text-purple-700">.uz</span></span>
             </div>
             <p className="text-slate-500 max-w-sm leading-relaxed mb-8">
               {t.footer.desc}
             </p>
             <div className="flex gap-4">
               {['Instagram', 'Telegram', 'Facebook', 'LinkedIn'].map((s) => (
-                <a key={s} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-violet-600 transition-colors">
+                <a key={s} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-purple-600 transition-colors">
                   <ExternalLink className="w-4 h-4" />
                 </a>
               ))}
@@ -773,7 +721,7 @@ const TelegramButton = () => {
 export default function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen selection:bg-violet-500/30">
+      <div className="min-h-screen selection:bg-purple-500/30">
         <Navbar />
         <main>
           <Hero />
