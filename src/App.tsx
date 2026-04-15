@@ -725,25 +725,6 @@ export default function App() {
         <Navbar />
         <main>
           <Hero />
-          <section style={{ padding: "60px 0", textAlign: "center" }}>
-  <h2>Нам доверяют лидеры рынка</h2>
-
-  <div style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "40px",
-    flexWrap: "wrap",
-    marginTop: "30px"
-  }}>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Coca-Cola_logo.svg" style={{ height: "60px" }} />
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Pepsi_logo_2014.svg" style={{ height: "60px" }} />
-    <img src="https://upload.wikimedia.org/wikipedia/sco/7/75/KFC_logo.svg" style={{ height: "60px" }} />
-    <img src="https://seeklogo.com/images/U/uzum-logo.png" style={{ height: "60px" }} />
-    <img src="https://seeklogo.com/images/N/nbu-logo.png" style={{ height: "60px" }} />
-    <img src="https://seeklogo.com/images/K/krafers-logo.png" style={{ height: "60px" }} />
-  </div>
-</section>
           <TrustBar />
           <Services />
           <HowItWorks />
