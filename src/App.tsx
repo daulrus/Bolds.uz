@@ -372,25 +372,6 @@ const Services = () => {
   const colors = ["from-blue-500 to-cyan-500", "from-purple-500 to-pink-500"];
 
   return (
-    <section style={{ padding: "60px 0", textAlign: "center" }}>
-  <h2>Нам доверяют лидеры рынка</h2>
-
-  <div style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "30px",
-    flexWrap: "wrap",
-    marginTop: "30px",
-    alignItems: "center"
-  }}>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Coca-Cola_logo.svg" style={{ height: "60px" }} />
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Pepsi_logo_2014.svg" style={{ height: "60px" }} />
-    <img src="https://upload.wikimedia.org/wikipedia/sco/7/75/KFC_logo.svg" style={{ height: "60px" }} />
-    <img src="https://seeklogo.com/images/U/uzum-logo.png" style={{ height: "60px" }} />
-    <img src="https://seeklogo.com/images/N/nbu-logo.png" style={{ height: "60px" }} />
-    <img src="https://seeklogo.com/images/K/krafers-logo.png" style={{ height: "60px" }} />
-  </div>
-</section>
     <section id="services" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
