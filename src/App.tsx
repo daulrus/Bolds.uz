@@ -352,13 +352,12 @@ const TrustBar = () => {
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">{t.hero.trustBar}</p>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-         {[
-  "/logos/pepsi.png",
-  "/logos/cocacola.png",
-  "/logos/kfc.png",
-  "/logos/uzum.png",
-  "/logos/crafers.png",
-  "/logos/nbu.png",
+        {[
+  "/logos/UzAuto-01.png",
+  "/logos/assets.jpg",
+  "/logos/png-transparent-kfc-logo-kfc-fast-food-crispy-fried-chicken-logo-round-kfc-logo-food-free-logo-design-template-fast-food-restaurant-thumbnail.png",
+  "/logos/tdiu.png",
+  "/logos/зие.jpg",
 ].map((logo, idx) => (
   <div 
     key={idx}
