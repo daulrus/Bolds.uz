@@ -352,14 +352,25 @@ const TrustBar = () => {
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">{t.hero.trustBar}</p>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-          {[1, 2, 3, 4, 5, 6].map((idx) => (
-            <div 
-              key={idx} 
-              className="h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors cursor-default"
-            >
-              <div className="text-sm text-slate-400 font-medium">Logo {idx}</div>
-            </div>
-          ))}
+         {[
+  "/logos/pepsi.png",
+  "/logos/cocacola.png",
+  "/logos/kfc.png",
+  "/logos/uzum.png",
+  "/logos/crafers.png",
+  "/logos/nbu.png",
+].map((logo, idx) => (
+  <div 
+    key={idx}
+    className="h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors"
+  >
+    <img 
+      src={logo} 
+      alt="client logo" 
+      className="max-h-8 opacity-70 hover:opacity-100 transition"
+    />
+  </div>
+))}
         </div>
       </div>
     </section>
