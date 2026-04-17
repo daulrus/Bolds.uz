@@ -365,7 +365,7 @@ const TrustBar = () => {
     <img 
       src={logo} 
       alt="client logo" 
-      className="h-10 w-auto object-contain opacity-70 hover:opacity-100 transition"
+      className="h-12 w-full object-contain opacity-70 hover:opacity-100 transition"
     />
   </div>
 ))}
