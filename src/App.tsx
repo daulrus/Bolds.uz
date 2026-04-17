@@ -355,18 +355,17 @@ const TrustBar = () => {
         {[
   "/logos/UzAuto-01.png",
   "/logos/assets.jpg",
-  "/logos/png-transparent-kfc-logo-kfc-fast-food-crispy-fried-chicken-logo-round-kfc-logo-food-free-logo-design-template-fast-food-restaurant-thumbnail.png",
   "/logos/tdiu.png",
   "/logos/зие.jpg",
 ].map((logo, idx) => (
   <div 
     key={idx}
-    className="h-16 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors"
+    className="h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center p-4 hover:bg-white/10 transition-colors"
   >
     <img 
       src={logo} 
       alt="client logo" 
-      className="max-h-8 opacity-70 hover:opacity-100 transition"
+      className="h-10 w-auto object-contain opacity-70 hover:opacity-100 transition"
     />
   </div>
 ))}
