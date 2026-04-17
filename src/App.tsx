@@ -365,15 +365,15 @@ const TrustBar = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
 
           {logos.map((logo, idx) => (
-            <div
-              key={idx}
-              className="h-20 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
-            >
-              <img
-                src={logo}
-                alt="client logo"
-                className="h-10 w-auto object-contain opacity-70 hover:opacity-100 transition"
-              />
+           <div
+  key={idx}
+  className="h-20 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+/>
+             <img
+  src={logo}
+  alt="client logo"
+  className="h-8 w-auto object-contain"
+/>
             </div>
           ))}
 
