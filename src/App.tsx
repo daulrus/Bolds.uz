@@ -347,28 +347,36 @@ const Hero = () => {
 const TrustBar = () => {
   const { t } = useLanguage();
 
+  const logos = [
+    "/logos/UzAuto-01.png",
+    "/logos/assets.jpg",
+    "/logos/tdiu.png",
+    "/logos/зие.jpg",
+  ];
+
   return (
     <section className="py-12 border-y border-white/5 bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-6">
-        <p className="text-center text-slate-500 text-sm font-medium mb-8 uppercase tracking-widest">{t.hero.trustBar}</p>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-        {[
-  "/logos/UzAuto-01.png",
-  "/logos/assets.jpg",
-  "/logos/tdiu.png",
-  "/logos/зие.jpg",
-].map((logo, idx) => (
-  <div 
-    key={idx}
-    className="h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center p-4 hover:bg-white/10 transition-colors"
-  >
-    <img
-  src={logo}
-  alt="client logo"
-  className="max-h-10 w-auto object-contain opacity-70 hover:opacity-100 transition"
-/>
-  </div>
-))}
+
+        <p className="text-center text-slate-500 text-sm font-medium mb-10 uppercase tracking-widest">
+          {t.hero.trustBar}
+        </p>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+
+          {logos.map((logo, idx) => (
+            <div
+              key={idx}
+              className="h-20 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+            >
+              <img
+                src={logo}
+                alt="client logo"
+                className="h-10 w-auto object-contain opacity-70 hover:opacity-100 transition"
+              />
+            </div>
+          ))}
+
         </div>
       </div>
     </section>
