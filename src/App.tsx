@@ -237,11 +237,14 @@ const Hero = () => {
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-6 break-words">
             {t.hero.title} <br />
-            <span className="gradient-text text-5xl md:text-6xl">{t.hero.titleAccent}</span>
-          </h1>
-          <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-xl leading-relaxed">
-            {t.hero.subtitle}
-          </p>
+           <span className="gradient-text">
+  {t.hero.titleAccent}
+</span>
+</h1>
+
+<p className="text-sm sm:text-base md:text-xl text-slate-400 mb-6 md:mb-8 max-w-xl leading-relaxed">
+  {t.hero.subtitle}
+</p>
           
           <div className="flex flex-col sm:flex-row gap-4">
             <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all hover:shadow-[0_0_20px_rgba(147,51,234,0.4)] flex items-center justify-center gap-2 group">
