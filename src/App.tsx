@@ -548,28 +548,51 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 blur-[120px] rounded-full -z-10" />
-      
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <h2 className="text-5xl font-bold mb-6">{t.contact.title} <br /> <span className="gradient-text">Bold Steps?</span></h2>
-          <p className="text-slate-400 text-lg mb-12">
-            {t.contact.desc}
-          </p>
+  <section
+    id="contact"
+    className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+  >
+    {/* Background blur */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-purple-600/10 blur-[120px] rounded-full -z-10" />
 
-          <div className="space-y-8">
-            <div className="flex items-center gap-6">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400">
-                <Phone className="w-6 h-6" />
+    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+      
+      {/* LEFT SIDE */}
+      <div>
+        {/* Title */}
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
+          {t.contact.title} <br />
+          <span className="gradient-text">Bold Steps?</span>
+        </h2>
+
+        {/* Description */}
+        <p className="text-slate-400 text-sm sm:text-base md:text-lg mb-8 md:mb-12">
+          {t.contact.desc}
+        </p>
+
+        {/* Contact items */}
+        <div className="space-y-6 md:space-y-8">
+
+          <div className="flex items-center gap-4 md:gap-6">
+            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400">
+              <Phone className="w-5 h-5 md:w-6 md:h-6" />
+            </div>
+            <div>
+              <div className="text-xs md:text-sm text-slate-500 uppercase tracking-wider font-bold">
+                {t.contact.phone}
               </div>
-              <div>
-                <div className="text-sm text-slate-500 uppercase tracking-wider font-bold">{t.contact.phone}</div>
-                <div className="text-xl font-bold">+998 77 000 22 00</div>
+              <div className="text-base md:text-xl font-bold">
+                +998 77 000 22 00
               </div>
             </div>
           </div>
+
         </div>
+      </div>
+
+    </div>
+  </section>
+);
 
         <div className="glass-card p-8 md:p-10">
           {!isSubmitted ? (
