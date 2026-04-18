@@ -353,7 +353,7 @@ const TrustBar = () => {
     "/logos/tdiu.png",
     "/logos/зие.jpg",
     "/logos/strategies.png",
-    "/logos/Emblem_of_State_comittee_of_Uzbekistan_on_ecology.png",
+    "/logos/ecology.png",
   ];
 
   return (
