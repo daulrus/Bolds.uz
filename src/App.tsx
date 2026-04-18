@@ -357,24 +357,29 @@ const TrustBar = () => {
   ];
 
   return (
-    <section className="py-12 border-y border-white/5 bg-slate-950/50">
+    <section className="py-20 bg-slate-950">
       <div className="max-w-7xl mx-auto px-6">
 
-        <p className="text-center text-slate-500 text-sm font-medium mb-10 uppercase tracking-widest">
+        {/* Title */}
+        <p className="text-center text-slate-400 text-xs md:text-sm font-medium mb-14 uppercase tracking-[0.35em]">
           {t.hero.trustBar}
         </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        {/* Logos */}
+        <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-12">
 
           {logos.map((logo, idx) => (
-            <div
-              key={idx}
-              className="h-20 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
-            >
+            <div key={idx} className="flex items-center justify-center">
               <img
                 src={logo}
                 alt="client logo"
-                className="h-8 w-auto object-contain"
+                className="
+                  h-20 md:h-24 w-auto object-contain
+                  grayscale opacity-60
+                  hover:grayscale-0 hover:opacity-100
+                  hover:scale-110
+                  transition-all duration-300 ease-out
+                "
               />
             </div>
           ))}
