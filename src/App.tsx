@@ -235,7 +235,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-6">
             <Clock className="w-3 h-3" /> {t.hero.badge}
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-6 break-words">
             {t.hero.title} <br />
             <span className="gradient-text text-5xl md:text-6xl">{t.hero.titleAccent}</span>
           </h1>
