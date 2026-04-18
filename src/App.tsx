@@ -358,7 +358,7 @@ const TrustBar = () => {
 
   return (
     <section className="py-20 bg-slate-950">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Title */}
         <p className="text-center text-slate-400 text-xs md:text-sm font-medium mb-14 uppercase tracking-[0.35em]">
