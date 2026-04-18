@@ -485,7 +485,7 @@ const Industries = () => {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {t.industries.items.map((ind, idx) => (
             <div key={idx} className="glass-card p-6 text-center hover:bg-white/10 transition-colors cursor-default">
               <div className="text-purple-500 mb-4 flex justify-center">{icons[idx < icons.length ? idx : icons.length - 1]}</div>
