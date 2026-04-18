@@ -324,7 +324,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-4">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
                 <div className="text-2xl font-bold text-purple-400">15+</div>
                 <div className="text-[10px] text-slate-400 uppercase tracking-wider">{t.hero.experience}</div>
