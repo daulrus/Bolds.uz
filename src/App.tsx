@@ -104,7 +104,7 @@ const Navbar = () => {
           <img
             src="/logos/logo.png"
             alt="logo"
-            className="h-12 md:h-14 w-auto object-contain"
+            className="h-16 md:h-20 w-auto object-contain"
           />
           <span className="text-xl font-semibold">
             Bolds<span className="text-purple-500">.uz</span>
