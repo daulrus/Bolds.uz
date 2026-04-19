@@ -597,62 +597,104 @@ const ContactForm = () => {
   </section>
 );
 
-        <div className="glass-card p-8 md:p-10">
-          {!isSubmitted ? (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-300">{t.contact.form.name}</label>
-                  <input 
-                    {...register("name", { required: true })}
-                    placeholder={t.contact.form.namePlaceholder}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors"
-                  />
-                  {errors.name && <span className="text-xs text-red-400">{t.contact.form.required}</span>}
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-300">{t.contact.form.contact}</label>
-                  <input 
-                    {...register("contact", { required: true })}
-                    placeholder={t.contact.form.contactPlaceholder}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors"
-                  />
-                  {errors.contact && <span className="text-xs text-red-400">{t.contact.form.required}</span>}
-                </div>
-              </div>
+      <div className="glass-card p-8 md:p-10">
+  {!isSubmitted ? (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-300">{t.contact.form.service}</label>
-                <select 
-                  {...register("service")}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition-colors appearance-none text-white relative z-10"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a78bfa' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'right 1rem center',
-                    paddingRight: '2.5rem'
-                  }}
-                >
-                  <option value="written" className="bg-slate-900 text-white">{t.services.items[0].title}</option>
-                  <option value="oral" className="bg-slate-900 text-white">{t.services.items[1].title}</option>
-                </select>
-              </div>
+      {/* NAME + CONTACT */}
+      <div className="grid md:grid-cols-2 gap-6">
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-300">{t.contact.form.file}</label>
-                <div className="relative group">
-                  <input 
-                    type="file" 
-                    {...register("file")}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  />
-                  <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2 group-hover:border-purple-500/50 transition-colors">
-                    <Upload className="w-8 h-8 text-slate-500 group-hover:text-purple-400 transition-colors" />
-                    <span className="text-sm text-slate-400">{t.contact.form.fileHint}</span>
-                  </div>
-                </div>
-              </div>
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-300">
+            {t.contact.form.name}
+          </label>
+          <input
+            {...register("name", { required: true })}
+            placeholder={t.contact.form.namePlaceholder}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500"
+          />
+          {errors.name && (
+            <span className="text-xs text-red-400">
+              {t.contact.form.required}
+            </span>
+          )}
+        </div>
 
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-300">
+            {t.contact.form.contact}
+          </label>
+          <input
+            {...register("contact", { required: true })}
+            placeholder={t.contact.form.contactPlaceholder}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500"
+          />
+          {errors.contact && (
+            <span className="text-xs text-red-400">
+              {t.contact.form.required}
+            </span>
+          )}
+        </div>
+
+      </div>
+
+      {/* SERVICE */}
+      <div className="space-y-2">
+        <label className="text-sm font-bold text-slate-300">
+          {t.contact.form.service}
+        </label>
+
+        <select
+          {...register("service")}
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+        >
+          <option value="written">
+            {t.services.items[0].title}
+          </option>
+          <option value="oral">
+            {t.services.items[1].title}
+          </option>
+        </select>
+      </div>
+
+      {/* FILE */}
+      <div className="space-y-2">
+        <label className="text-sm font-bold text-slate-300">
+          {t.contact.form.file}
+        </label>
+
+        <div className="relative group">
+          <input
+            type="file"
+            {...register("file")}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          />
+
+          <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2">
+            <Upload className="w-8 h-8 text-slate-500" />
+            <span className="text-sm text-slate-400">
+              {t.contact.form.fileHint}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* BUTTON */}
+      <button
+        type="submit"
+        className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl"
+      >
+        {t.contact.form.submit}
+      </button>
+
+    </form>
+  ) : (
+    <div className="text-center py-10">
+      <CheckCircle2 className="w-10 h-10 text-green-400 mx-auto mb-4" />
+      <h3 className="text-xl font-bold">Sent!</h3>
+    </div>
+  )}
+</div>
               <button 
                 type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-600/20 active:scale-[0.98]"
