@@ -94,12 +94,12 @@ const Navbar = () => {
       isScrolled ? "bg-slate-950/80 backdrop-blur-md border-b border-white/10" : "bg-transparent"
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
-            <Languages className="text-white w-6 h-6" />
-          </div>
-          <span className="text-2xl font-bold tracking-tight">Bolds<span className="text-purple-700">.uz</span></span>
-        </div>
+        <div className="flex items-center gap-3">
+  <img src="/logos/Logoo.png" alt="logo" className="h-10 w-auto" />
+  <span className="text-xl font-semibold">
+    Bolds<span className="text-purple-500">.uz</span>
+  </span>
+</div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
