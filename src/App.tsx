@@ -124,117 +124,104 @@ return (
         ))}
       </div>
 
-    </div>
-  </nav>
-);
-          
-          {/* Language Switcher */}
-          <div className="relative z-40">
-            <button 
-              onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-              className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors uppercase"
-            >
-              <Globe className="w-4 h-4" /> {language} <ChevronDown className={cn("w-3 h-3 transition-transform", isLangMenuOpen && "rotate-180")} />
-            </button>
-            <AnimatePresence>
-              {isLangMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50"
-                >
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => {
-                        setLanguage(lang.code);
-                        setIsLangMenuOpen(false);
-                      }}
-                      className={cn(
-                        "w-full px-4 py-2 text-left text-xs font-medium transition-colors hover:bg-white/5",
-                        language === lang.code ? "text-purple-400 bg-purple-500/5" : "text-slate-400"
-                      )}
-                    >
-                      {lang.label}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+      {/* RIGHT SIDE */}
+      <div className="flex items-center gap-4">
 
-          <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95">
-            {t.nav.cta}
-          </a>
-        </div>
-
-        {/* Mobile Toggle */}
-        <div className="flex items-center gap-4 md:hidden">
-           <button 
-              onClick={() => {
-                const nextLang = language === 'ru' ? 'en' : language === 'en' ? 'uz' : 'ru';
-                setLanguage(nextLang);
-              }}
-              className="text-xs font-bold text-purple-400 uppercase border border-purple-500/20 px-2 py-1 rounded"
-            >
-              {language}
-            </button>
-          <button className="text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X /> : <Menu />}
+        {/* Language Switcher */}
+        <div className="relative z-40">
+          <button
+            onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+            className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors uppercase"
+          >
+            <Globe className="w-4 h-4" />
+            {language}
+            <ChevronDown className={cn("w-3 h-3 transition-transform", isLangMenuOpen && "rotate-180")} />
           </button>
+
+          <AnimatePresence>
+            {isLangMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50"
+              >
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => {
+                      setLanguage(lang.code);
+                      setIsLangMenuOpen(false);
+                    }}
+                    className={cn(
+                      "w-full px-4 py-2 text-left text-xs font-medium hover:bg-white/5",
+                      language === lang.code ? "text-purple-400 bg-purple-500/5" : "text-slate-400"
+                    )}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
+
+        <a
+          href="#contact"
+          className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+        >
+          {t.nav.cta}
+        </a>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 flex flex-col gap-4 md:hidden z-40"
-          >
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-medium text-slate-300"
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="flex gap-4 py-2">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => {
-                    setLanguage(lang.code);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={cn(
-                    "text-xs font-bold uppercase px-3 py-1 rounded-lg border",
-                    language === lang.code ? "bg-purple-600 border-purple-600 text-white" : "border-white/10 text-slate-400"
-                  )}
-                >
-                  {lang.code}
-                </button>
-              ))}
-            </div>
-            <a 
-              href="#contact" 
+      {/* Mobile Toggle */}
+      <div className="flex items-center gap-4 md:hidden">
+        <button
+          onClick={() => {
+            const nextLang =
+              language === 'ru' ? 'en' : language === 'en' ? 'uz' : 'ru';
+            setLanguage(nextLang);
+          }}
+          className="text-xs font-bold text-purple-400 uppercase border border-purple-500/20 px-2 py-1 rounded"
+        >
+          {language}
+        </button>
+
+        <button
+          className="text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+
+    </div>
+
+    {/* Mobile Menu */}
+    <AnimatePresence>
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 flex flex-col gap-4 md:hidden z-40"
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="bg-purple-600 text-white px-6 py-3 rounded-xl text-center font-semibold"
+              className="text-lg font-medium text-slate-300"
             >
-              {t.nav.cta}
+              {link.name}
             </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-};
+          ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+  </nav>
+);
 
 const Hero = () => {
   const { t } = useLanguage();
