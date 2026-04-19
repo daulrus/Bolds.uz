@@ -551,189 +551,176 @@ const ContactForm = () => {
   };
 
   return (
-  <section
-    id="contact"
-    className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
-  >
-    {/* Background blur */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-purple-600/10 blur-[120px] rounded-full -z-10" />
-
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
-      
-      {/* LEFT SIDE */}
-      <div>
-        {/* Title */}
-        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
-          {t.contact.title} <br />
-          <span className="gradient-text">Bold Steps?</span>
-        </h2>
-
-        {/* Description */}
-        <p className="text-slate-400 text-sm sm:text-base md:text-lg mb-8 md:mb-12">
-          {t.contact.desc}
-        </p>
-
-        {/* Contact items */}
-        <div className="space-y-6 md:space-y-8">
-
-          <div className="flex items-center gap-4 md:gap-6">
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400">
-              <Phone className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <div>
-              <div className="text-xs md:text-sm text-slate-500 uppercase tracking-wider font-bold">
-                {t.contact.phone}
-              </div>
-              <div className="text-base md:text-xl font-bold">
-                +998 77 000 22 00
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-);
-
-      <div className="glass-card p-8 md:p-10">
-  {!isSubmitted ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
-      {/* NAME + CONTACT */}
-      <div className="grid md:grid-cols-2 gap-6">
-
-        <div className="space-y-2">
-          <label className="text-sm font-bold text-slate-300">
-            {t.contact.form.name}
-          </label>
-          <input
-            {...register("name", { required: true })}
-            placeholder={t.contact.form.namePlaceholder}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500"
-          />
-          {errors.name && (
-            <span className="text-xs text-red-400">
-              {t.contact.form.required}
-            </span>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-bold text-slate-300">
-            {t.contact.form.contact}
-          </label>
-          <input
-            {...register("contact", { required: true })}
-            placeholder={t.contact.form.contactPlaceholder}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500"
-          />
-          {errors.contact && (
-            <span className="text-xs text-red-400">
-              {t.contact.form.required}
-            </span>
-          )}
-        </div>
-
-      </div>
-
-      {/* SERVICE */}
-      <div className="space-y-2">
-        <label className="text-sm font-bold text-slate-300">
-          {t.contact.form.service}
-        </label>
-
-        <select
-          {...register("service")}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
-        >
-          <option value="written">
-            {t.services.items[0].title}
-          </option>
-          <option value="oral">
-            {t.services.items[1].title}
-          </option>
-        </select>
-      </div>
-
-      {/* FILE */}
-      <div className="space-y-2">
-        <label className="text-sm font-bold text-slate-300">
-          {t.contact.form.file}
-        </label>
-
-        <div className="relative group">
-          <input
-            type="file"
-            {...register("file")}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          />
-
-          <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2">
-            <Upload className="w-8 h-8 text-slate-500" />
-            <span className="text-sm text-slate-400">
-              {t.contact.form.fileHint}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* BUTTON */}
-      <button
-        type="submit"
-        className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl"
+    <>
+      <section
+        id="contact"
+        className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       >
-        {t.contact.form.submit}
-      </button>
+        {/* Background blur */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-purple-600/10 blur-[120px] rounded-full -z-10" />
 
-    </form>
-  ) : (
-    <div className="text-center py-10">
-      <CheckCircle2 className="w-10 h-10 text-green-400 mx-auto mb-4" />
-      <h3 className="text-xl font-bold">Sent!</h3>
-    </div>
-  )}
-</div>
-              <button 
-                type="submit"
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-600/20 active:scale-[0.98]"
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+
+          {/* LEFT SIDE */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
+              {t.contact.title} <br />
+              <span className="gradient-text">Bold Steps?</span>
+            </h2>
+
+            <p className="text-slate-400 text-sm sm:text-base md:text-lg mb-8 md:mb-12">
+              {t.contact.desc}
+            </p>
+
+            <div className="space-y-6 md:space-y-8">
+
+              <div className="flex items-center gap-4 md:gap-6">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400">
+                  <Phone className="w-5 h-5 md:w-6 md:h-6" />
+                </div>
+
+                <div>
+                  <div className="text-xs md:text-sm text-slate-500 uppercase tracking-wider font-bold">
+                    {t.contact.phone}
+                  </div>
+                  <div className="text-base md:text-xl font-bold">
+                    +998 77 000 22 00
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* RIGHT SIDE */}
+          <div className="glass-card p-8 md:p-10">
+
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
+                {/* NAME + CONTACT */}
+                <div className="grid md:grid-cols-2 gap-6">
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-300">
+                      {t.contact.form.name}
+                    </label>
+                    <input
+                      {...register("name", { required: true })}
+                      placeholder={t.contact.form.namePlaceholder}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500"
+                    />
+                    {errors.name && (
+                      <span className="text-xs text-red-400">
+                        {t.contact.form.required}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-300">
+                      {t.contact.form.contact}
+                    </label>
+                    <input
+                      {...register("contact", { required: true })}
+                      placeholder={t.contact.form.contactPlaceholder}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500"
+                    />
+                    {errors.contact && (
+                      <span className="text-xs text-red-400">
+                        {t.contact.form.required}
+                      </span>
+                    )}
+                  </div>
+
+                </div>
+
+                {/* SERVICE */}
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-300">
+                    {t.contact.form.service}
+                  </label>
+
+                  <select
+                    {...register("service")}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+                  >
+                    <option value="written">
+                      {t.services.items[0].title}
+                    </option>
+                    <option value="oral">
+                      {t.services.items[1].title}
+                    </option>
+                  </select>
+                </div>
+
+                {/* FILE */}
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-300">
+                    {t.contact.form.file}
+                  </label>
+
+                  <div className="relative group">
+                    <input
+                      type="file"
+                      {...register("file")}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+
+                    <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2">
+                      <Upload className="w-8 h-8 text-slate-500" />
+                      <span className="text-sm text-slate-400">
+                        {t.contact.form.fileHint}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* BUTTON */}
+                <button
+                  type="submit"
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-purple-600/20 active:scale-[0.98]"
+                >
+                  {t.contact.form.submit}
+                </button>
+
+                <p className="text-[10px] text-center text-slate-500">
+                  {t.contact.form.privacy}
+                </p>
+
+              </form>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-12"
               >
-                {t.contact.form.submit}
-              </button>
-              <p className="text-[10px] text-center text-slate-500">
-                {t.contact.form.privacy}
-              </p>
-            </form>
-) : (
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    className="text-center py-12"
-  >
-    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-      <CheckCircle2 className="w-10 h-10 text-green-400" />
-    </div>
+                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle2 className="w-10 h-10 text-green-400" />
+                </div>
 
-    <h3 className="text-2xl font-bold mb-4">
-      {t.contact.form.successTitle}
-    </h3>
+                <h3 className="text-2xl font-bold mb-4">
+                  {t.contact.form.successTitle}
+                </h3>
 
-    <p className="text-slate-400 mb-8">
-      {t.contact.form.successDesc}
-    </p>
+                <p className="text-slate-400 mb-8">
+                  {t.contact.form.successDesc}
+                </p>
 
-    <button 
-      onClick={() => setIsSubmitted(false)}
-      className="text-purple-400 font-bold hover:underline"
-    >
-      {t.contact.form.another}
-    </button>
-  </motion.div>
-)}
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="text-purple-400 font-bold hover:underline"
+                >
+                  {t.contact.form.another}
+                </button>
+              </motion.div>
+            )}
+
+          </div>
+
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
