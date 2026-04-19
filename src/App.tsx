@@ -88,7 +88,7 @@ const Navbar = () => {
     { code: 'uz', label: 'O\'zbekcha' },
   ];
 
- return (
+return (
   <nav
     className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-5 min-h-[72px] flex items-center",
@@ -98,7 +98,8 @@ const Navbar = () => {
     )}
   >
     <div className="max-w-7xl mx-auto flex items-center justify-between">
-      
+
+      {/* LOGO */}
       <div className="flex items-center gap-3">
         <img
           src="/logos/logo.png"
@@ -110,17 +111,20 @@ const Navbar = () => {
         </span>
       </div>
 
-    </div>
-  </nav>
-);
+      {/* Desktop Nav */}
+      <div className="hidden md:flex items-center gap-8">
+        {navLinks.map((link) => (
+          <a
+            key={link.name}
+            href={link.href}
+            className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-              {link.name}
-            </a>
-          ))}
+    </div>
           
           {/* Language Switcher */}
           <div className="relative z-40">
