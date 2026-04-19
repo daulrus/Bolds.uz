@@ -90,13 +90,13 @@ const Navbar = () => {
 
   return (
     <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-5 min-h-[72px] flex items-center"
       isScrolled ? "bg-slate-950/80 backdrop-blur-md border-b border-white/10" : "bg-transparent"
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-3">
   <img 
-    src="/logos/Logoo.png" 
+    src="/logos/logo.png" 
     alt="logo" 
     className="h-14 md:h-16 w-auto object-contain"
   />
