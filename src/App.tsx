@@ -705,25 +705,32 @@ const ContactForm = () => {
                 {t.contact.form.privacy}
               </p>
             </form>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-12"
-            >
-              <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-10 h-10 text-green-400" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.contact.form.successTitle}</h3>
-              <p className="text-slate-400 mb-8">{t.contact.form.successDesc}</p>
-              <button 
-                onClick={() => setIsSubmitted(false)}
-                className="text-purple-400 font-bold hover:underline"
-              >
-                {t.contact.form.another}
-              </button>
-            </motion.div>
-          )}
+) : (
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    className="text-center py-12"
+  >
+    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+      <CheckCircle2 className="w-10 h-10 text-green-400" />
+    </div>
+
+    <h3 className="text-2xl font-bold mb-4">
+      {t.contact.form.successTitle}
+    </h3>
+
+    <p className="text-slate-400 mb-8">
+      {t.contact.form.successDesc}
+    </p>
+
+    <button 
+      onClick={() => setIsSubmitted(false)}
+      className="text-purple-400 font-bold hover:underline"
+    >
+      {t.contact.form.another}
+    </button>
+  </motion.div>
+)}
         </div>
       </div>
     </section>
