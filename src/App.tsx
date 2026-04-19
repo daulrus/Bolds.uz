@@ -88,22 +88,31 @@ const Navbar = () => {
     { code: 'uz', label: 'O\'zbekcha' },
   ];
 
-  return (
-    <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-5 min-h-[72px] flex items-center"
-      isScrolled ? "bg-slate-950/80 backdrop-blur-md border-b border-white/10" : "bg-transparent"
-    )}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-3">
-  <img 
-    src="/logos/logo.png" 
-    alt="logo" 
-    className="h-14 md:h-16 w-auto object-contain"
-  />
-  <span className="text-xl font-semibold">
-    Bolds<span className="text-purple-500">.uz</span>
-  </span>
-</div>
+ return (
+  <nav
+    className={cn(
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-5 min-h-[72px] flex items-center",
+      isScrolled
+        ? "bg-slate-950/80 backdrop-blur-md border-b border-white/10"
+        : "bg-transparent"
+    )}
+  >
+    <div className="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <div className="flex items-center gap-3">
+        <img
+          src="/logos/logo.png"
+          alt="logo"
+          className="h-14 md:h-16 w-auto object-contain"
+        />
+        <span className="text-xl font-semibold">
+          Bolds<span className="text-purple-500">.uz</span>
+        </span>
+      </div>
+
+    </div>
+  </nav>
+);
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
