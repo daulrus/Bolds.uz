@@ -839,6 +839,17 @@ export default function App() {
         </main>
         <Footer />
         <TelegramButton />
+
+        <img
+          src="/logos/photoqr.jpeg"
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            width: "120px"
+          }}
+        />
+
       </div>
     </LanguageProvider>
   );
