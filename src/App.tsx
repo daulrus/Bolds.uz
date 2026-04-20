@@ -514,10 +514,35 @@ const ContactForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+  const message = `
+📩 Новая заявка Bold Steps
+
+👤 Имя: ${data.name}
+📞 Контакт: ${data.contact}
+🛠 Услуга: ${data.service}
+🌍 Языки: ${data.languagePair}
+💬 Сообщение: ${data.message || "нет"}
+`;
+
+  try {
+    await fetch(`https://api.telegram.org/bot8695347391:AAGUStfnh6IOGPAjPJd6t8gaGsF9-LkJgWw/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: "-1003721275626",
+        text: message,
+      }),
+    });
+
     setIsSubmitted(true);
-  };
+  } catch (error) {
+    console.error("Telegram error:", error);
+    alert("Ошибка отправки заявки");
+  }
+};
 
   return (
     <>
