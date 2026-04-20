@@ -672,34 +672,37 @@ const ContactForm = () => {
                   </select>
                 </div>
 
-                {/* FILE */}
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-300">
-                    {t.contact.form.file}
-                  </label>
+               {/* FILE */}
+<div className="space-y-2">
+  <label className="text-sm font-bold text-slate-300">
+    {t.contact.form.file}
+  </label>
 
-                  <div className="relative group">
-                    <input
-  type="file"
-  {...register("file")}
-  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-  onChange={(e) => {
-    const file = e.target.files[0];
-    if (file) {
-      document.getElementById("file-name").innerText = "📎 " + file.name;
-    }
-  }}
-/>
+  <div className="relative group">
+    <input
+      type="file"
+      {...register("file")}
+      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+      onChange={(e) => {
+        const file = e.target.files[0];
+        if (file) {
+          document.getElementById("file-name").innerText = "📎 " + file.name;
+        }
+      }}
+    />
 
-                    <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2">
-                      <Upload className="w-8 h-8 text-slate-500" />
-                      <span className="text-sm text-slate-400">
-                        {t.contact.form.fileHint}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+    <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-8 flex flex-col items-center justify-center gap-2">
+      <Upload className="w-8 h-8 text-slate-500" />
+      <span className="text-sm text-slate-400">
+        {t.contact.form.fileHint}
+      </span>
+    </div>
+  </div>
 
+  {/* 👇 ВОТ ЭТОГО НЕ ХВАТАЛО */}
+  <p id="file-name" className="text-xs text-slate-400 mt-2"></p>
+</div>
+                
                 {/* BUTTON */}
                 <button
                   type="submit"
