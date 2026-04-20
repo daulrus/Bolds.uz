@@ -194,84 +194,139 @@ const Navbar = () => {
 const Hero = () => {
   const { t } = useLanguage();
   return (
-    <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+    <section className="relative pt-32 pb-20 px-6 overflow-hidden bg-[#050507]">
+      
+      {/* dark premium background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/20 blur-[120px] rounded-full" />
+        
+        <div className="absolute top-[-10%] left-[-10%] w-[45%] h-[45%] bg-purple-900/20 blur-[140px] rounded-full" />
+        
+        <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-indigo-900/20 blur-[140px] rounded-full" />
+        
+        <div className="absolute top-[40%] left-[30%] w-[30%] h-[30%] bg-violet-900/10 blur-[160px] rounded-full" />
+        
       </div>
 
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+        
+        {/* LEFT SIDE */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-6">
-            <Clock className="w-3 h-3" /> {t.hero.badge}
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-6 break-words">
-            {t.hero.title} <br />
-           <span className="gradient-text">
-  {t.hero.titleAccent}
-</span>
-</h1>
-
-<p className="text-sm sm:text-base md:text-xl text-slate-400 mb-6 md:mb-8 max-w-xl leading-relaxed">
-  {t.hero.subtitle}
-</p>
           
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#contact" className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all hover:shadow-[0_0_20px_rgba(147,51,234,0.4)] flex items-center justify-center gap-2 group">
-              {t.hero.ctaPrimary} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a href="https://t.me/boldsuz" className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2">
-              <MessageSquare className="w-5 h-5 text-blue-400" /> {t.hero.ctaSecondary}
-            </a>
+          {/* badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-white/70 text-xs font-bold uppercase tracking-wider mb-7">
+            <Clock className="w-3 h-3 text-purple-400" />
+            {t.hero.badge}
           </div>
 
+          {/* title */}
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 break-words tracking-tight">
+            
+            <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              {t.hero.title}
+            </span>
+            
+            <br />
+            
+            <span className="text-slate-300">
+              {t.hero.titleAccent}
+            </span>
+
+          </h1>
+
+          {/* subtitle */}
+          <p className="text-sm sm:text-base md:text-xl text-slate-400 mb-7 md:mb-9 max-w-xl leading-relaxed">
+            {t.hero.subtitle}
+          </p>
+          
+          {/* buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            
+            <a
+              href="#contact"
+              className="bg-white text-black px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center gap-2 group"
+            >
+              {t.hero.ctaPrimary}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+
+            <a
+              href="https://t.me/boldsuz"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2"
+            >
+              <MessageSquare className="w-5 h-5 text-indigo-400" />
+              {t.hero.ctaSecondary}
+            </a>
+
+          </div>
+
+          {/* avatars */}
           <div className="mt-12 flex items-center gap-6">
+            
             <div className="flex -space-x-3">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center text-[10px] font-bold">
-                  <img src={`https://i.pravatar.cc/100?u=${i}`} alt="User" className="w-full h-full rounded-full" referrerPolicy="no-referrer" />
+                <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={`https://i.pravatar.cc/100?u=${i}`}
+                    alt="User"
+                    className="w-full h-full rounded-full"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
               ))}
             </div>
+
             <div className="text-sm">
-              <div className="font-bold">{t.hero.stats}</div>
+              <div className="font-bold text-white">{t.hero.stats}</div>
               <div className="text-slate-500">{t.hero.trust}</div>
             </div>
+
           </div>
         </motion.div>
 
+        {/* RIGHT SIDE */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative hidden lg:block"
         >
-          <div className="glass-card p-8 relative z-10 overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-3xl rounded-full" />
-            <div className="flex items-center justify-between mb-8">
+          
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative z-10 overflow-hidden shadow-[0_10px_50px_rgba(0,0,0,0.6)]">
+            
+            <div className="absolute top-0 right-0 w-40 h-40 bg-purple-900/20 blur-3xl rounded-full" />
+
+            {/* header */}
+            <div className="flex items-center justify-between mb-9">
+              
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
                   <Globe2 className="text-purple-400" />
                 </div>
+
                 <div>
-                  <div className="text-sm font-bold">{t.hero.pairs}</div>
+                  <div className="text-sm font-bold text-white">{t.hero.pairs}</div>
                   <div className="text-xs text-slate-500">{t.hero.directions}</div>
                 </div>
               </div>
+
               <div className="text-right">
                 <div className="text-xs text-slate-500">{t.hero.status}</div>
                 <div className="text-xs font-bold text-green-400 flex items-center gap-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> {t.hero.online}
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                  {t.hero.online}
                 </div>
               </div>
+
             </div>
 
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+            {/* progress */}
+            <div className="space-y-5">
+              
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex justify-between text-xs mb-2">
                   <span className="text-slate-400">{t.hero.tech}</span>
                   <span className="text-purple-400">{t.hero.accuracy}</span>
@@ -281,11 +336,12 @@ const Hero = () => {
                     initial={{ width: 0 }}
                     animate={{ width: '98%' }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className="h-full bg-purple-500" 
+                    className="h-full bg-purple-600" 
                   />
                 </div>
               </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex justify-between text-xs mb-2">
                   <span className="text-slate-400">{t.hero.sync}</span>
                   <span className="text-indigo-400">Live Support</span>
@@ -295,27 +351,36 @@ const Hero = () => {
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
                     transition={{ duration: 1, delay: 0.7 }}
-                    className="h-full bg-indigo-500" 
+                    className="h-full bg-indigo-600" 
                   />
                 </div>
               </div>
+
             </div>
 
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
-                <div className="text-2xl font-bold text-purple-400">15+</div>
+            {/* stats */}
+            <div className="mt-9 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
+                <div className="text-2xl font-bold text-white">15+</div>
                 <div className="text-[10px] text-slate-400 uppercase tracking-wider">{t.hero.experience}</div>
               </div>
-              <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-center">
-                <div className="text-2xl font-bold text-indigo-400">24/7</div>
+
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
+                <div className="text-2xl font-bold text-white">24/7</div>
                 <div className="text-[10px] text-slate-400 uppercase tracking-wider">{t.hero.support}</div>
               </div>
+
             </div>
+
           </div>
-          {/* Decorative elements */}
-          <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-600/20 rounded-full blur-2xl" />
-          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-600/20 rounded-full blur-2xl" />
+
+          {/* decorations */}
+          <div className="absolute -top-8 -right-8 w-28 h-28 bg-purple-900/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-8 -left-8 w-36 h-36 bg-indigo-900/20 rounded-full blur-3xl" />
+
         </motion.div>
+
       </div>
     </section>
   );
