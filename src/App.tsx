@@ -370,40 +370,80 @@ const TrustBar = () => {
 
 const Services = () => {
   const { t } = useLanguage();
-  const icons = [<FileText className="w-8 h-8" />, <Headphones className="w-8 h-8" />];
-  const colors = ["from-blue-500 to-cyan-500", "from-purple-500 to-pink-500"];
+  const icons = [
+    <FileText className="w-8 h-8" />,
+    <Headphones className="w-8 h-8" />
+  ];
+
+  const colors = [
+    "from-blue-500/20 to-cyan-500/20",
+    "from-purple-500/20 to-pink-500/20"
+  ];
 
   return (
-    <section id="services" className="py-24 px-6">
+    <section id="services" className="py-24 px-6 relative">
+      
+      {/* subtle background glow */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.05),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.04),transparent_40%)]"></div>
+
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">{t.services.title}</h2>
-          <p className="text-purple-500 font-bold text-sm uppercase tracking-widest mb-2">{t.services.subtitle}</p>
-          <p className="text-slate-400 max-w-2xl mx-auto">{t.services.desc}</p>
+        
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+            {t.services.title}
+          </h2>
+
+          <p className="text-purple-400 font-bold text-sm uppercase tracking-widest mb-2">
+            {t.services.subtitle}
+          </p>
+
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            {t.services.desc}
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+          
           {t.services.items.map((service, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ y: -10 }}
-              className="glass-card p-8 flex flex-col h-full group"
+              whileHover={{ y: -12, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              className="group relative p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.4)] hover:border-white/20 transition-all duration-300 flex flex-col h-full overflow-hidden"
             >
-              <div className={cn("w-16 h-16 rounded-2xl bg-linear-to-br mb-6 flex items-center justify-center text-white shadow-lg", colors[idx])}>
+
+              {/* glow background */}
+              <div className={`absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 bg-gradient-to-br ${colors[idx]}`}></div>
+
+              {/* icon */}
+              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colors[idx]} mb-6 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
                 {icons[idx]}
               </div>
-              <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-              <p className="text-slate-400 mb-8 flex-grow">{service.description}</p>
+
+              <h3 className="text-2xl font-bold mb-4 tracking-tight">
+                {service.title}
+              </h3>
+
+              <p className="text-slate-400 mb-8 flex-grow leading-relaxed">
+                {service.description}
+              </p>
+
               <ul className="space-y-3 mb-8">
                 {service.features.map((f, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-purple-500" /> {f}
+                    <CheckCircle2 className="w-4 h-4 text-purple-400" />
+                    {f}
                   </li>
                 ))}
               </ul>
-              <a href="#contact" className="w-full py-3 rounded-xl border border-white/10 text-center font-bold hover:bg-white/5 transition-colors">
+
+              <a
+                href="#contact"
+                className="w-full py-3 rounded-xl text-center font-semibold bg-white text-black hover:bg-gray-200 transition-all duration-300 hover:scale-[1.02] active:scale-95"
+              >
                 {t.services.more}
               </a>
+
             </motion.div>
           ))}
         </div>
