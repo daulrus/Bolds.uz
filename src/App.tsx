@@ -520,7 +520,7 @@ const ContactForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onSubmit = async (data: FormData) => {
-  const token = "8695347391:AAH9a4Yt52Q2icrV7JWtuMBSIyY-791g2tk"; // вставишь токен бота
+  const token = "8695347391:AAH9a4Yt52Q2icrV7JWtuMBSIyY-791g2tk";
   const chatId = "-1003721275626";
 
   const message = `
@@ -533,6 +533,7 @@ const ContactForm = () => {
 `;
 
   try {
+    // 1️⃣ ОТПРАВКА ТЕКСТА (как у тебя было)
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: {
@@ -546,6 +547,18 @@ const ContactForm = () => {
 
     if (!res.ok) {
       throw new Error("Telegram error");
+    }
+
+    // 2️⃣ ➕ ДОБАВЛЕНО: ОТПРАВКА ФАЙЛА
+    if (data.file?.[0]) {
+      const fileForm = new FormData();
+      fileForm.append("chat_id", chatId);
+      fileForm.append("document", data.file[0]);
+
+      await fetch(`https://api.telegram.org/bot${token}/sendDocument`, {
+        method: "POST",
+        body: fileForm,
+      });
     }
 
     setIsSubmitted(true);
