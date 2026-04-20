@@ -343,23 +343,18 @@ const TrustBar = () => {
         </p>
 
         {/* Logos */}
-        <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-12">
-
-          {logos.map((logo, idx) => (
-            <div key={idx} className="flex items-center justify-center">
-              <img
-                src={logo}
-                alt="client logo"
-                className="
-                  h-20 md:h-24 w-auto object-contain
-                  grayscale opacity-60
-                  hover:grayscale-0 hover:opacity-100
-                  hover:scale-110
-                  transition-all duration-300 ease-out
-                "
-              />
-            </div>
-          ))}
+        <div className="overflow-hidden">
+  <div className="flex gap-16 w-max animate-scroll">
+    {[...logos, ...logos].map((logo, idx) => (
+      <img
+        key={idx}
+        src={logo}
+        alt="client logo"
+        className="h-20 md:h-24 w-auto object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all"
+      />
+    ))}
+  </div>
+</div>
 
         </div>
 
