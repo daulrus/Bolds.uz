@@ -519,10 +519,41 @@ const ContactForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+  const token = "8695347391:AAH9a4Yt52Q2icrV7JWtuMBSIyY-791g2tk"; // вставишь токен бота
+  const chatId = "-1003721275626";
+
+  const message = `
+📩 Новая заявка Bold Steps
+
+👤 Имя: ${data.name}
+📞 Контакт: ${data.contact}
+🛠 Услуга: ${data.service}
+💬 Сообщение: ${data.message || "нет"}
+`;
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Telegram error");
+    }
+
     setIsSubmitted(true);
-  };
+  } catch (error) {
+    console.error("Telegram error:", error);
+    alert("Ошибка отправки");
+  }
+};
 
   return (
     <>
