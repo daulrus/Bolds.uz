@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Languages, 
   MessageSquare, 
@@ -343,18 +343,23 @@ const TrustBar = () => {
         </p>
 
         {/* Logos */}
-        <div className="overflow-hidden">
-  <div className="flex gap-16 w-max animate-scroll">
-    {[...logos, ...logos].map((logo, idx) => (
-      <img
-        key={idx}
-        src={logo}
-        alt="client logo"
-        className="h-20 md:h-24 w-auto object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all"
-      />
-    ))}
-  </div>
-</div>
+        <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-12">
+
+          {logos.map((logo, idx) => (
+            <div key={idx} className="flex items-center justify-center">
+              <img
+                src={logo}
+                alt="client logo"
+                className="
+                  h-20 md:h-24 w-auto object-contain
+                  grayscale opacity-60
+                  hover:grayscale-0 hover:opacity-100
+                  hover:scale-110
+                  transition-all duration-300 ease-out
+                "
+              />
+            </div>
+          ))}
 
         </div>
 
@@ -514,37 +519,13 @@ const ContactForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const onSubmit = async (data: FormData) => {
-    const message = `
-📩 Новая заявка Bold Steps
-
-👤 Имя: ${data.name}
-📞 Контакт: ${data.contact}
-🛠 Услуга: ${data.service}
-🌍 Языки: ${data.languagePair}
-💬 Сообщение: ${data.message || "нет"}
-`;
-
-    try {
-      await fetch(`https://api.telegram.org/bot${import.meta.env.VITE_TELEGRAM_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chat_id: "-1003721275626",
-          text: message,
-        }),
-      });
-
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error("Telegram error:", error);
-      alert("Ошибка отправки заявки");
-    }
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+    setIsSubmitted(true);
   };
 
   return (
+    <>
       <section
         id="contact"
         className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
@@ -713,6 +694,7 @@ const ContactForm = () => {
 
         </div>
       </section>
+    </>
   );
 };
 
