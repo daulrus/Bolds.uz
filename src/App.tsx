@@ -713,7 +713,6 @@ const ContactForm = () => {
 
         </div>
       </section>
-    </>
   );
 };
 
