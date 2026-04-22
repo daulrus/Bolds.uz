@@ -889,26 +889,15 @@ export default function App() {
         <Footer />
         <TelegramButton />
 
-       {/* QR SECTION (BOTTOM OF SITE) */}
-<div className="flex justify-center mt-20 mb-10">
-  <img
-    src="/logos/photoqr.jpeg"
-    alt="QR Code"
-    onClick={() => setQrOpen(true)}
-    className="w-28 md:w-32 cursor-pointer bg-indigo-950/80 backdrop-blur-md p-2 rounded-xl shadow-2xl transition hover:scale-105"
-  />
-</div>
+       <img 
+         src="/logos/photoqr.jpeg" 
+         alt="QR Code" 
+         className="fixed bottom-5 left-5 z-50 w-28 md:w-32 
+         bg-indigo-950/80 backdrop-blur-md 
+         p-2 rounded-xl shadow-2xl" 
+         /> 
+      </div> 
+    </LanguageProvider> 
+  ); 
+}
 
-{/* ZOOM MODAL */}
-{qrOpen && (
-  <div
-    className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-    onClick={() => setQrOpen(false)}
-  >
-    <img
-      src="/logos/photoqr.jpeg"
-      alt="QR Code Large"
-      className="w-72 md:w-96 rounded-xl shadow-2xl"
-    />
-  </div>
-)}
