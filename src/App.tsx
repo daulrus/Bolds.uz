@@ -889,13 +889,17 @@ export default function App() {
         <Footer />
         <TelegramButton />
 
-       <img 
-         src="/logos/photoqr.jpeg" 
-         alt="QR Code" 
-         className="fixed bottom-5 left-5 z-50 w-28 md:w-32 
-         bg-indigo-950/80 backdrop-blur-md 
-         p-2 rounded-xl shadow-2xl" 
-         /> 
+<div className="w-full flex flex-col items-center justify-center mt-16 mb-10">
+
+  <img
+    src="/logos/photoqr.jpeg"
+    alt="QR Code"
+    className="w-28 md:w-32 
+               bg-indigo-950/80 backdrop-blur-md 
+               p-2 rounded-xl shadow-2xl"
+  />
+
+</div>
       </div> 
     </LanguageProvider> 
   ); 
