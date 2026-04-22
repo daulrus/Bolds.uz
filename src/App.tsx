@@ -890,14 +890,12 @@ export default function App() {
         <TelegramButton />
 
         <img
-          src="/logos/photoqr.jpeg"
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            left: "20px",
-            width: "120px"
-          }}
-        />
+  src="/logos/photoqr.jpeg"
+  alt="QR Code"
+  className="fixed bottom-5 left-5 z-50 w-28 md:w-32 
+             bg-indigo-950/80 backdrop-blur-md 
+             p-2 rounded-xl shadow-2xl"
+/>
 
       </div>
     </LanguageProvider>
